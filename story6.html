@@ -3,11 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ummagga Jatakaya - Thorana</title>
+    <title>Vesak Greetings – Share your Wishes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .greet-page {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .greet-bg {
+            position: fixed;
+            inset: 0;
+            background: url('img/bg.webp') center center / cover no-repeat;
+            z-index: 0;
+        }
+        .greet-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right,
+                rgba(0,0,5,0.35) 0%,
+                rgba(0,0,5,0.10) 50%,
+                rgba(0,0,15,0.70) 100%);
+        }
+        /* ── Layout ── */
+        .greet-layout {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 32px;
+            align-items: center;
+        }
+        /* ── Left: greeting display ── */
+        .greet-display {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px 20px 140px 20px;
+        }
+        .greet-line-small {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: #fff;
+            letter-spacing: 0.25em;
+            text-shadow: 0 0 20px rgba(255,215,0,0.8);
+        }
+        .greet-line-large {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffe066, #ffb300, #fff7a0, #ffb300);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            filter: drop-shadow(0 0 30px rgba(255,180,0,0.9));
+            margin: 6px 0;
+        }
+        .greet-line-from {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1rem, 2.5vw, 1.6rem);
+            color: #fff;
+            letter-spacing: 0.2em;
+            text-shadow: 0 0 20px rgba(255,215,0,0.8);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .greet-line-from::before, .greet-line-from::after {
+            content: '—';
+            color: rgba(255,215,0,0.6);
+        }
+        .greet-extra-lines { margin-top: 24px; display: flex; flex-direction: column; gap: 6px; }
+        .greet-extra-line {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+            color: rgba(255,255,255,0.85);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            min-height: 0;
+        }
+        /* ── Right: glass panel ── */
+        .greet-panel {
+            background: rgba(10,12,30,0.78);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 24px;
+            padding: 28px 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+        .panel-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
+        .panel-icon {
+            width: 38px; height: 38px;
+            background: linear-gradient(135deg, #ffea00, #ff9800);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .panel-header-text h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem; font-weight: 600; color: #fff; margin: 0;
+        }
+        .panel-header-text p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem; color: rgba(255,255,255,0.45); margin: 3px 0 0;
+        }
+        .field-group { margin-bottom: 12px; }
+        .field-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; color: rgba(255,255,255,0.45);
+            letter-spacing: 0.05em; margin-bottom: 5px; display: block;
+        }
+        .field-input {
+            width: 100%; background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px; padding: 9px 13px;
+            font-family: 'Inter', sans-serif; font-size: 0.88rem;
+            color: #fff; outline: none; transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+        .field-input:focus { border-color: rgba(255,215,0,0.5); background: rgba(255,255,255,0.1); }
+        .char-count {
+            text-align: right; font-family: 'Inter', sans-serif;
+            font-size: 0.68rem; color: rgba(255,255,255,0.3); margin-top: 6px;
+        }
+        .panel-dots { text-align: center; color: rgba(255,255,255,0.2); letter-spacing: 4px; margin-top: 8px; }
+
+        /* ── Short link display ── */
+        .link-box {
+            background: rgba(255,215,0,0.08);
+            border: 1px solid rgba(255,215,0,0.25);
+            border-radius: 10px;
+            padding: 10px 14px;
+            margin-top: 14px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .link-box.visible { display: flex; }
+        .link-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem; color: #ffea00;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            flex: 1;
+        }
+        .copy-btn {
+            background: rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 6px; padding: 4px 10px;
+            font-family: 'Inter', sans-serif; font-size: 0.72rem; color: #ffea00;
+            cursor: pointer; white-space: nowrap; transition: all 0.2s;
+        }
+        .copy-btn:hover { background: rgba(255,215,0,0.25); }
+
+        /* ── Bottom actions ── */
+        .greet-actions {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            z-index: 100; display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
+        .greet-btn-row { display: flex; gap: 16px; }
+        .btn-reset {
+            font-family: 'Inter', sans-serif; font-size: 0.9rem;
+            padding: 12px 24px; border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px); color: #fff; cursor: pointer;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s;
+        }
+        .btn-reset:hover { background: rgba(255,255,255,0.18); }
+        .btn-generate {
+            font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600;
+            padding: 12px 24px; border-radius: 50px; border: none;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #fff; cursor: pointer;
+            display: flex; align-items: center; gap: 10px; transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+        }
+        .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.6); }
+        .btn-generate:disabled { opacity: 0.6; cursor: wait; transform: none; }
+        .greet-hint {
+            font-family: 'Inter', sans-serif; font-size: 0.72rem;
+            color: rgba(255,255,255,0.45); text-align: center;
+        }
+
+        /* ── VIEW MODE ── */
+        .view-mode-badge {
+            position: fixed; top: 20px; right: 20px; z-index: 200;
+            background: rgba(10,12,30,0.8); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 50px; padding: 10px 20px;
+            font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #fff;
+            display: none; align-items: center; gap: 10px;
+            text-decoration: none; cursor: pointer;
+            transition: all 0.3s;
+        }
+        .view-mode-badge:hover { background: rgba(30,30,60,0.9); border-color: rgba(255,215,0,0.6); }
+        .view-mode-badge.show { display: flex; }
+        .view-full-display { padding-bottom: 60px; }
+
+        /* ── Spinner ── */
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spinner {
+            width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff; border-radius: 50%;
+            animation: spin 0.8s linear infinite; display: none;
+        }
+        .btn-generate.loading .spinner { display: block; }
+        .btn-generate.loading .btn-label { display: none; }
+
+        /* ── Mobile ── */
+        @media (max-width: 700px) {
+            .greet-layout { grid-template-columns: 1fr; }
+            .greet-panel { width: 100%; }
+            .greet-display { padding-bottom: 70px; }
+        }
+    </style>
 </head>
 <body>
     <div id="night-sky"></div>
@@ -15,37 +238,233 @@
     <div class="corner-right" id="lanterns-container"></div>
     <a href="index.html" class="back-button">← Gallery</a>
 
-    <main class="thorana-page">
-        <h1 class="thorana-title">Ummagga Jatakaya</h1>
-        
-        <div class="thorana-wrapper" id="thorana">
-            <div class="t-crest"><div class="t-led-ring crest-ring"></div></div>
-            <div class="t-circle t-c1" data-scene="scene1"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 1 Placeholder"></div></div>
-            <div class="t-circle t-c6" data-scene="scene6"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 6 Placeholder"></div></div>
-            <div class="t-circle t-c2" data-scene="scene2"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 2 Placeholder"></div></div>
-            <div class="t-circle t-c5" data-scene="scene5"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 5 Placeholder"></div></div>
-            <div class="t-circle t-c4" data-scene="scene4"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 4 Placeholder"></div></div>
-            <div class="t-circle t-c3" data-scene="scene3"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 3 Placeholder"></div></div>
-            <div class="thorana-base">
-                <div class="base-title">උම්මග්ග ජාතකය</div>
-                <div class="base-summary">විශිෂ්ට නුවණින් ගැටලු විසඳීම</div>
+    <!-- VIEW MODE: "Send your own" button -->
+    <a href="story6.html" class="view-mode-badge" id="send-yours-btn">
+        🌸 Send your own Vesak Greeting
+    </a>
+
+    <div class="greet-bg"></div>
+
+    <main class="greet-page">
+        <div class="greet-layout" id="greet-layout">
+
+            <!-- LEFT: Live greeting display -->
+            <div class="greet-display" id="greet-display">
+                <div class="greet-line-small" id="preview-l1">Happy Vesak</div>
+                <div class="greet-line-large">Vesak</div>
+                <div class="greet-line-from" id="preview-l2">from Seni</div>
+                <div class="greet-extra-lines">
+                    <div class="greet-extra-line" id="preview-l3"></div>
+                    <div class="greet-extra-line" id="preview-l4"></div>
+                    <div class="greet-extra-line" id="preview-l5"></div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Edit panel (hidden in view mode) -->
+            <div class="greet-panel" id="edit-panel">
+                <div class="panel-header">
+                    <div class="panel-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a0a00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </div>
+                    <div class="panel-header-text">
+                        <h2>Edit Greeting</h2>
+                        <p>Customize your Vesak greeting</p>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Line 1</label>
+                    <input id="inp-l1" class="field-input" type="text" value="Happy Vesak" maxlength="40">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Line 2 (Your Name)</label>
+                    <input id="inp-l2" class="field-input" type="text" value="from Seni" maxlength="40">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Line 3 (Optional)</label>
+                    <input id="inp-l3" class="field-input" type="text" value="May this Vesak bring peace," maxlength="60">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Line 4 (Optional)</label>
+                    <input id="inp-l4" class="field-input" type="text" value="compassion and happiness to all." maxlength="60">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Line 5 (Optional)</label>
+                    <input id="inp-l5" class="field-input" type="text" value="Wishing you a blessed Vesak!" maxlength="60">
+                </div>
+
+                <div class="char-count" id="char-count">0 / 120</div>
+
+                <!-- Generated link preview -->
+                <div class="link-box" id="link-box">
+                    <span class="link-text" id="link-text"></span>
+                    <button class="copy-btn" id="copy-btn" onclick="copyLink()">Copy</button>
+                </div>
+
+                <div class="panel-dots">• • •</div>
             </div>
         </div>
     </main>
 
-    <div id="glass-modal" class="glass-modal"><div class="glass-modal-content"><span class="glass-close">&times;</span><h2 id="modal-title">Scene Details</h2><div id="modal-text"></div></div></div>
-    <div class="glass-controls"><button id="btn-chasing" class="glass-btn active">Chasing</button><button id="btn-breathing" class="glass-btn">Breathing</button><button id="btn-random" class="glass-btn">Random</button></div>
+    <!-- Actions (hidden in view mode) -->
+    <div class="greet-actions" id="greet-actions">
+        <div class="greet-btn-row">
+            <button class="btn-reset" onclick="resetToDefault()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+                Reset
+            </button>
+            <button class="btn-generate" id="share-btn" onclick="generateAndShare()">
+                <div class="spinner"></div>
+                <span class="btn-label" style="display:flex;align-items:center;gap:8px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                    Share on WhatsApp
+                </span>
+            </button>
+        </div>
+        <div class="greet-hint">✨ A short shareable link will be created for your greeting</div>
+    </div>
 
     <script>
-        const storyData = {
-            center: { title: "Gautama Buddha", desc: "The central figure of enlightenment." },
-            scene1: { title: "The Threat", desc: "King Brahmadatta, manipulated by a wicked advisor, plans to destroy King Vedeha by inviting him to a fake wedding." },
-            scene2: { title: "Mahosadha's Suspicion", desc: "The wise Mahosadha suspects a trap but knows the King will not listen. He decides to go ahead and build defenses." },
-            scene3: { title: "Building the City", desc: "Mahosadha constructs a magnificent new city as a decoy, complete with towering walls and intricate palaces." },
-            scene4: { title: "The Great Tunnel (Ummagga)", desc: "Secretly, he engineers a massive, luxurious underground tunnel connecting the new city to a safe exit point." },
-            scene5: { title: "The Trap is Sprung", desc: "King Vedeha arrives and is immediately surrounded by Brahmadatta's armies. He panics." },
-            scene6: { title: "The Escape", desc: "Mahosadha leads Vedeha through the secret tunnel to safety. He then captures Brahmadatta's family using the same tunnel, forcing a peace treaty." }
+        // ─────────────────────────────────────────────────────
+        // ─────────────────────────────────────────────────────
+        const SITE_BASE = 'https://bexonsr.github.io/thorana/story6.html';
+        // ─────────────────────────────────────────────────────
+
+        const DEFAULTS = {
+            l1: 'Happy Vesak', l2: 'from Seni',
+            l3: 'May this Vesak bring peace,',
+            l4: 'compassion and happiness to all.',
+            l5: 'Wishing you a blessed Vesak!'
         };
+
+        const inputs  = { l1: document.getElementById('inp-l1'), l2: document.getElementById('inp-l2'), l3: document.getElementById('inp-l3'), l4: document.getElementById('inp-l4'), l5: document.getElementById('inp-l5') };
+        const previews = { l1: document.getElementById('preview-l1'), l2: document.getElementById('preview-l2'), l3: document.getElementById('preview-l3'), l4: document.getElementById('preview-l4'), l5: document.getElementById('preview-l5') };
+        let generatedShortLink = '';
+
+        // ── Update live preview ──
+        function updatePreview() {
+            previews.l1.textContent = inputs.l1.value || DEFAULTS.l1;
+            previews.l2.textContent = inputs.l2.value || DEFAULTS.l2;
+            previews.l3.textContent = inputs.l3.value;
+            previews.l4.textContent = inputs.l4.value;
+            previews.l5.textContent = inputs.l5.value;
+            const total = (inputs.l3.value + inputs.l4.value + inputs.l5.value).length;
+            const cc = document.getElementById('char-count');
+            cc.textContent = total + ' / 120';
+            cc.style.color = total > 100 ? 'rgba(255,100,100,0.8)' : 'rgba(255,255,255,0.3)';
+        }
+        Object.values(inputs).forEach(inp => inp.addEventListener('input', () => { updatePreview(); resetLinkBox(); }));
+
+        function resetLinkBox() {
+            generatedShortLink = '';
+            document.getElementById('link-box').classList.remove('visible');
+        }
+
+        function resetToDefault() {
+            Object.entries(DEFAULTS).forEach(([k,v]) => { inputs[k].value = v; });
+            updatePreview(); resetLinkBox();
+        }
+
+        // ── Encode greeting into URL ──
+        function buildLongUrl() {
+            const data = { l1: inputs.l1.value, l2: inputs.l2.value, l3: inputs.l3.value, l4: inputs.l4.value, l5: inputs.l5.value };
+            const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+            return SITE_BASE + '?g=' + encoded;
+        }
+
+        // ── Shorten via is.gd ──
+        async function shortenUrl(longUrl) {
+            const res = await fetch('https://is.gd/create.php?format=json&url=' + encodeURIComponent(longUrl));
+            const json = await res.json();
+            if (json.shorturl) return json.shorturl;
+            throw new Error('Shortening failed');
+        }
+
+        // ── Main: generate short link then share ──
+        async function generateAndShare() {
+            const btn = document.getElementById('share-btn');
+            btn.disabled = true;
+            btn.classList.add('loading');
+
+            try {
+                const longUrl = buildLongUrl();
+                let shortLink;
+                try {
+                    shortLink = await shortenUrl(longUrl);
+                } catch {
+                    // Fallback to long URL if shortener fails
+                    shortLink = longUrl;
+                }
+                generatedShortLink = shortLink;
+
+                // Show link box
+                document.getElementById('link-text').textContent = shortLink;
+                document.getElementById('link-box').classList.add('visible');
+
+                // Build WhatsApp message
+                const l1 = inputs.l1.value || DEFAULTS.l1;
+                const l2 = inputs.l2.value || DEFAULTS.l2;
+                const l3 = inputs.l3.value;
+                const l4 = inputs.l4.value;
+                const l5 = inputs.l5.value;
+
+                let msg = `🌸 *${l1}* 🌸\n_${l2}_\n\n`;
+                if (l3) msg += l3 + '\n';
+                if (l4) msg += l4 + '\n';
+                if (l5) msg += l5 + '\n';
+                msg += `\n🪷 Open your Vesak greeting:\n${shortLink}`;
+
+                window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+            } catch (e) {
+                alert('Something went wrong. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('loading');
+            }
+        }
+
+        function copyLink() {
+            if (!generatedShortLink) return;
+            navigator.clipboard.writeText(generatedShortLink).then(() => {
+                const btn = document.getElementById('copy-btn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            });
+        }
+
+        // ─────────────────────────────────────────────────────
+        // VIEW MODE — detect ?g= param and display greeting
+        // ─────────────────────────────────────────────────────
+        function loadGreetingFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const g = params.get('g');
+            if (!g) return false;
+
+            try {
+                const data = JSON.parse(decodeURIComponent(escape(atob(g))));
+                previews.l1.textContent = data.l1 || DEFAULTS.l1;
+                previews.l2.textContent = data.l2 || DEFAULTS.l2;
+                previews.l3.textContent = data.l3 || '';
+                previews.l4.textContent = data.l4 || '';
+                previews.l5.textContent = data.l5 || '';
+                return true;
+            } catch { return false; }
+        }
+
+        // ── Init ──
+        const isViewMode = loadGreetingFromUrl();
+
+        if (isViewMode) {
+            // Hide edit panel and action buttons
+            document.getElementById('edit-panel').style.display = 'none';
+            document.getElementById('greet-actions').style.display = 'none';
+            document.getElementById('greet-layout').style.gridTemplateColumns = '1fr';
+            document.getElementById('greet-display').classList.add('view-full-display');
+            document.getElementById('send-yours-btn').classList.add('show');
+            document.title = previews.l1.textContent + ' – Vesak Greeting';
+        } else {
+            updatePreview();
+        }
     </script>
     <script src="script.js"></script>
 </body>

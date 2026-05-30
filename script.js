@@ -19,26 +19,43 @@ createStars();
 // --- Procedural LED Generation (Circular) ---
 const ledRings = document.querySelectorAll('.t-led-ring');
 const allBulbs = [];
-const ledColors = ['red', 'yellow', 'blue', 'green'];
+const ledColors = ['red', 'yellow', 'blue', 'green', 'white', 'orange'];
+const crestColors = ['blue', 'yellow', 'red', 'white', 'orange', 'pink'];
 
 function generateRings() {
     ledRings.forEach(ring => {
-        // Is it the top crest or a circle?
+        // Is it the top crest, base, or a circle?
         const isCrest = ring.classList.contains('crest-ring');
+        const isBase = ring.classList.contains('base-ring');
         
         if (isCrest) {
-            // Crest logic: parametric ellipse
-            const count = 40;
-            const centerX = 200;
-            const centerY = 150;
-            const rX = 207.5;
-            const rY = 157.5;
+            // Crest logic: parametric ellipse (perfect semi-circle now)
+            const count = 35;
+            const centerX = 140;
+            const centerY = 140;
+            const rX = 147.5;
+            const rY = 147.5;
             for(let i=0; i<count; i++) {
                 let t = (i / (count - 1)) * Math.PI;
                 let x = centerX - (rX * Math.cos(t)); 
                 let y = centerY - (rY * Math.sin(t));
                 createBulb(ring, x + 'px', y + 'px');
             }
+        } else if (isBase) {
+            const w = ring.offsetWidth; 
+            const h = ring.offsetHeight;
+            
+            const countX = Math.floor(w / 15);
+            const countY = Math.floor(h / 15);
+            
+            // Top edge
+            for(let i=0; i<countX; i++) { createBulb(ring, (i/countX)*w + 'px', '0px'); }
+            // Right edge
+            for(let i=0; i<countY; i++) { createBulb(ring, w + 'px', (i/countY)*h + 'px'); }
+            // Bottom edge
+            for(let i=countX; i>0; i--) { createBulb(ring, (i/countX)*w + 'px', h + 'px'); }
+            // Left edge
+            for(let i=countY; i>0; i--) { createBulb(ring, '0px', (i/countY)*h + 'px'); }
         } else {
             // Perfect circle
             const parentWidth = ring.parentElement.offsetWidth; 
@@ -93,9 +110,17 @@ function runLighting() {
         animInterval = setInterval(() => {
             clearBulbs();
             allBulbs.forEach((b, i) => {
-                if ((i + step) % 6 === 0) {
-                    let colorIdx = Math.floor(i / 50) % 4; // Colors depend on region
-                    b.classList.add(ledColors[colorIdx]);
+                const isCrest = b.parentElement.classList.contains('crest-ring');
+                
+                if (isCrest) {
+                    if ((i + step) % 3 !== 0) { // Denser bulbs for crest
+                        b.classList.add(crestColors[i % 6]);
+                    }
+                } else {
+                    if ((i + step) % 6 === 0) {
+                        let colorIdx = Math.floor(i / 50) % 6; 
+                        b.classList.add(ledColors[colorIdx]);
+                    }
                 }
             });
             step++;
@@ -106,9 +131,10 @@ function runLighting() {
         animInterval = setInterval(() => {
             phase += 0.1;
             allBulbs.forEach((b, i) => {
+                const isCrest = b.parentElement.classList.contains('crest-ring');
                 let intensity = (Math.sin(phase + (i * 0.01)) + 1) / 2;
                 if (intensity > 0.7) {
-                    let c = ledColors[i % 4];
+                    let c = isCrest ? crestColors[i % 6] : ledColors[i % 6];
                     if(!b.classList.contains(c)) {
                         b.className = 'bulb ' + c;
                     }
@@ -122,7 +148,9 @@ function runLighting() {
         animInterval = setInterval(() => {
             allBulbs.forEach(b => {
                 if (Math.random() > 0.8) {
-                    b.className = 'bulb ' + ledColors[Math.floor(Math.random() * 4)];
+                    const isCrest = b.parentElement.classList.contains('crest-ring');
+                    let c = isCrest ? crestColors[Math.floor(Math.random() * 6)] : ledColors[Math.floor(Math.random() * 6)];
+                    b.className = 'bulb ' + c;
                 } else {
                     b.className = 'bulb';
                 }
