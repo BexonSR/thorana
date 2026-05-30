@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahosadha Jatakaya - Thorana</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="night-sky"></div>
+    <div class="corner-left" id="bo-leaves-container"></div>
+    <div class="corner-right" id="lanterns-container"></div>
+    <a href="index.html" class="back-button">← Gallery</a>
+
+    <main class="thorana-page">
+        <h1 class="thorana-title">Mahosadha Jatakaya</h1>
+        
+        <div class="thorana-wrapper" id="thorana">
+            <div class="t-crest"><div class="t-led-ring crest-ring"></div></div>
+            <div class="t-circle t-c1" data-scene="scene1"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 1 Placeholder"></div></div>
+            <div class="t-circle t-c6" data-scene="scene6"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 6 Placeholder"></div></div>
+            <div class="t-circle t-c2" data-scene="scene2"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 2 Placeholder"></div></div>
+            <div class="t-circle t-c5" data-scene="scene5"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 5 Placeholder"></div></div>
+            <div class="t-circle t-c4" data-scene="scene4"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 4 Placeholder"></div></div>
+            <div class="t-circle t-c3" data-scene="scene3"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 3 Placeholder"></div></div>
+            <div class="thorana-base">
+                <div class="base-title">මහෝෂධ ජාතකය</div>
+                <div class="base-summary">අසමසම ප්‍රඥාව පිළිබඳ කතාවකි</div>
+            </div>
+        </div>
+    </main>
+
+    <div id="glass-modal" class="glass-modal"><div class="glass-modal-content"><span class="glass-close">&times;</span><h2 id="modal-title">Scene Details</h2><div id="modal-text"></div></div></div>
+    <div class="glass-controls"><button id="btn-chasing" class="glass-btn active">Chasing</button><button id="btn-breathing" class="glass-btn">Breathing</button><button id="btn-random" class="glass-btn">Random</button></div>
+
+    <script>
+        const storyData = {
+            center: { title: "Gautama Buddha", desc: "The central figure of enlightenment." },
+            scene1: { title: "The Child Prodigy", desc: "Mahosadha is born with a medicinal plant in his hand, displaying extraordinary wisdom from infancy." },
+            scene2: { title: "Solving Disputes", desc: "As a young boy, he brilliantly solves complex disputes in his village, catching the attention of King Vedeha." },
+            scene3: { title: "The Jealous Ministers", desc: "Four senior ministers become deeply jealous of Mahosadha and constantly plot against him." },
+            scene4: { title: "The Tests", desc: "The King gives Mahosadha impossible tasks (making a rope of sand, finding an unblemished jewel), which he solves ingeniously." },
+            scene5: { title: "The Threat of Brahmadatta", desc: "King Brahmadatta lays siege to their city. Mahosadha takes command of the defense." },
+            scene6: { title: "The Great Tunnel", desc: "Mahosadha builds an incredible secret tunnel (Ummagga) to rescue the royal family and outsmart the enemy without bloodshed." }
+        };
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

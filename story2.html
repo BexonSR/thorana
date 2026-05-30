@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sasa Jatakaya - Thorana</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="night-sky"></div>
+    <div class="corner-left" id="bo-leaves-container"></div>
+    <div class="corner-right" id="lanterns-container"></div>
+    <a href="index.html" class="back-button">← Gallery</a>
+
+    <main class="thorana-page">
+        <h1 class="thorana-title">Sasa Jatakaya</h1>
+        
+        <div class="thorana-wrapper" id="thorana">
+            <div class="t-crest"><div class="t-led-ring crest-ring"></div></div>
+            <div class="t-circle t-c1" data-scene="scene1"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 1 Placeholder"></div></div>
+            <div class="t-circle t-c6" data-scene="scene6"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 6 Placeholder"></div></div>
+            <div class="t-circle t-c2" data-scene="scene2"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 2 Placeholder"></div></div>
+            <div class="t-circle t-c5" data-scene="scene5"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 5 Placeholder"></div></div>
+            <div class="t-circle t-c4" data-scene="scene4"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 4 Placeholder"></div></div>
+            <div class="t-circle t-c3" data-scene="scene3"><div class="t-led-ring"></div><div class="t-inner-content"><img src="" alt="Scene 3 Placeholder"></div></div>
+            <div class="thorana-base">
+                <div class="base-title">සස ජාතකය</div>
+                <div class="base-summary">සඳ මත සිටින හාවාගේ කතාව</div>
+            </div>
+        </div>
+    </main>
+
+    <div id="glass-modal" class="glass-modal">
+        <div class="glass-modal-content">
+            <span class="glass-close">&times;</span>
+            <h2 id="modal-title">Scene Details</h2>
+            <div id="modal-text"></div>
+        </div>
+    </div>
+
+    <div class="glass-controls">
+        <button id="btn-chasing" class="glass-btn active">Chasing</button>
+        <button id="btn-breathing" class="glass-btn">Breathing</button>
+        <button id="btn-random" class="glass-btn">Random</button>
+    </div>
+
+    <script>
+        const storyData = {
+            center: { title: "Gautama Buddha", desc: "The central figure of enlightenment." },
+            scene1: { title: "The Four Friends", desc: "A monkey, a jackal, an otter, and a hare (the Bodhisatta) live together in the forest, vowing to practice charity." },
+            scene2: { title: "The Otter's Fish", desc: "The otter finds red fish stranded on the riverbank to offer." },
+            scene3: { title: "The Jackal and Monkey", desc: "The jackal finds meat and curd, and the monkey gathers mangoes to give as alms." },
+            scene4: { title: "The Hare's Dilemma", desc: "The hare realizes he only has grass, which a human cannot eat. He resolves to offer his own flesh." },
+            scene5: { title: "Sakka's Test", desc: "Sakka (the king of gods) disguises himself as a starving Brahmin to test their resolve." },
+            scene6: { title: "The Sacrifice", desc: "The hare throws himself into a fire to feed the Brahmin. The fire does not burn him, and Sakka paints his image on the moon in his honor." }
+        };
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

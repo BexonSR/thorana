@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vessantara Jatakaya - Thorana</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="night-sky"></div>
+    <div class="corner-left" id="bo-leaves-container"></div>
+    <div class="corner-right" id="lanterns-container"></div>
+    <a href="index.html" class="back-button">← Gallery</a>
+
+    <main class="thorana-page">
+        <h1 class="thorana-title">Vessantara Jatakaya</h1>
+        
+        <div class="thorana-wrapper" id="thorana">
+            <div class="t-crest"><div class="t-led-ring crest-ring"></div></div>
+            <div class="t-circle t-c1" data-scene="scene1"><div class="t-led-ring"></div><div class="t-inner-content"><img src="img/wes/1.webp" alt="Scene 1 Placeholder"></div></div>
+            <div class="t-circle t-c6" data-scene="scene6"><div class="t-led-ring"></div><div class="t-inner-content"><img src="img/wes/2.webp" alt="Scene 6 Placeholder"></div></div>
+            <div class="t-circle t-c2" data-scene="scene2"><div class="t-led-ring"></div><div class="t-inner-content"><img src="img/wes/3.webp" alt="Scene 2 Placeholder"></div></div>
+            <div class="t-circle t-c5" data-scene="scene5"><div class="t-led-ring"></div><div class="t-inner-content"><img src="img/wes/4.webp" alt="Scene 5 Placeholder"></div></div>
+            <div class="t-circle t-c4" data-scene="scene4"><div class="t-led-ring"></div><div class="t-inner-content"><img src="img/wes/5.webp" alt="Scene 4 Placeholder"></div></div>
+            <div class="t-circle t-c3" data-scene="scene3"><div class="t-led-ring"></div><div class="t-inner-content"><img src="img/wes/6.webp" alt="Scene 3 Placeholder"></div></div>
+            <div class="thorana-base">
+                <div class="base-title">වෙස්සන්තර ජාතකය</div>
+                <div class="base-summary">දාන පාරමිතාව පිළිබඳ කතාවකි</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Glass Modal for Scene Details -->
+    <div id="glass-modal" class="glass-modal">
+        <div class="glass-modal-content">
+            <span class="glass-close">&times;</span>
+            <h2 id="modal-title">Scene Details</h2>
+            <div id="modal-text"></div>
+        </div>
+    </div>
+
+    <div class="glass-controls">
+        <button id="btn-chasing" class="glass-btn active">Chasing</button>
+        <button id="btn-breathing" class="glass-btn">Breathing</button>
+        <button id="btn-random" class="glass-btn">Random</button>
+    </div>
+
+    <!-- Pass story data to JS -->
+    <script>
+        const storyData = {
+            center: { title: "Gautama Buddha", desc: "The central figure of enlightenment." },
+            scene1: { title: "The Royal Birth", desc: "Prince Vessantara is born to the King of Sanjaya, known for his boundless generosity even from childhood." },
+            scene2: { title: "Giving the White Elephant", desc: "A severe drought hits the neighboring kingdom. They ask for the magical rain-bringing white elephant. Vessantara gives it away freely." },
+            scene3: { title: "Banishment", desc: "The citizens are furious about giving away the royal elephant and demand the King banish Vessantara to the forest." },
+            scene4: { title: "Giving away the Chariot", desc: "On his way to the forest, Vessantara gives away his horses and royal chariot to passing Brahmins." },
+            scene5: { title: "Giving the Children", desc: "A wicked Brahmin named Jujaka asks for Vessantara's children to be his servants. Vessantara, perfecting his generosity, gives them away." },
+            scene6: { title: "The Ultimate Sacrifice", desc: "Sakka (king of gods) disguises himself and asks for Vessantara's wife. Vessantara agrees, proving his detachment. Sakka reveals himself, restores everything, and the family is reunited." }
+        };
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
